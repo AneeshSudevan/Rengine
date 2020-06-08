@@ -219,7 +219,7 @@ $ctotalact = $row['cact'];
     <a href="OTHB/SearchOthBaseShedule.php">Promotion Sheduler</a>
     <a href="OTHB/RevenueTracker.php">Conversion</a>
 <a href="OTHB/ReportShedule.php">Trend-Reports-Tools</a>
-            <a href="../new.html">Test</a></p>
+            <a href="new.html">Test</a></p>
     </div>
   </div>
 
