@@ -1,0 +1,68 @@
+yum update clean all
+yum update all
+
+
+yum install -y epel-release
+
+pip install cryptography
+pip install jsonschema
+yum install -y yum-utils device-mapper-persistent-data lvm2 ansible git python-devel python-pip vim-enhanced
+yum install python36
+pip3 install docker-compose
+pip3 install docker
+pip3 install docker --upgrade
+
+
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce -y
+systemctl start docker
+systemctl enable docker
+
+check "docker ps"
+
+git clone --branch  13.0.0 https://github.com/ansible/awx.git
+cd awx/
+
+git clone https://github.com/ansible/awx-logos.git
+
+cd installer/
+
+enable these in  inventory file 
+
+
+admin_user=admin
+admin_password=password
+awx_official=true
+project_data_dir=/var/lib/awx/projects
+
+save 
+
+
+ansible-playbook -i inventory install.yml -vv
+
+TASK [local_docker : Start the containers]  - This will take time depending on your Internet - This will download 2 GB data . ( Docker Images )
+
+
+once this done 
+
+docker ps -a
+
+[root@globalawxmaster installer]# docker ps -a
+CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                  NAMES
+5e4fad5013bc        ansible/awx:13.0.0   "tini -- /usr/bin/la…"   13 minutes ago      Up 13 minutes       8052/tcp               awx_task
+ecd5a66e32b3        ansible/awx:13.0.0   "tini -- /bin/sh -c …"   14 minutes ago      Up 13 minutes       0.0.0.0:80->8052/tcp   awx_web
+4e2b84515b4b        postgres:10          "docker-entrypoint.s…"   14 minutes ago      Up 13 minutes       5432/tcp               awx_postgres
+20408b601e34        redis                "docker-entrypoint.s…"   14 minutes ago      Up 13 minutes       6379/tcp               awx_redis
+
+
+these contianer will be in runnign state . 
+
+Open the browser and check 
+
+
+http://ipaddress:80/
+
+username is “admin” and the password is “password”.
+
+
+first time it will take sometime to update the  page . 
